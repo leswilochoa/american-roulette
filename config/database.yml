@@ -80,6 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: american-roulette_production
-  username: american-roulette
+  url: postgres://tmxecddxlyzswu:7bdcb303ead6039708ad2b83d8307ea810101d05c984f4d13b65e1463a3403c8@ec2-50-19-125-201.compute-1.amazonaws.com:5432/d30jkpc8ll4oq5
+  host: ec2-50-19-125-201.compute-1.amazonaws.com
+  database: d30jkpc8ll4oq5
+  username: tmxecddxlyzswu
   password: <%= ENV['AMERICAN-ROULETTE_DATABASE_PASSWORD'] %>
