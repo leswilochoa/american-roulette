@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @gamer.full_name %>
+</p>
+
+<p>
+  <strong>Genero:</strong>
+  <%= @gamer.gender %>
+</p>
+
+<p>
+  <strong>Fecha de nacimiento:</strong>
+  <%= @gamer.born_date %>
+</p>
+
+<p>
+  <strong>Edad:</strong>
+  <%= Date.today.year - @gamer.born_date.year %>
+</p>
+
+<p>
+  <strong>Dinero disponible:</strong>
+  <%= number_to_currency(@gamer.wallet.money, precision: 2, strip_insignificant_zeros: true, separator:",", delimitier:".", ) %>
+</p>
+
+<%= link_to 'Edit', edit_gamer_path(@gamer) %> |
+<%= link_to 'Back', gamers_path %>
