@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  choice: MyString
+  amount: 1
+  amount_won: 1
+  gamer: one
+  round: one
+
+two:
+  choice: MyString
+  amount: 1
+  amount_won: 1
+  gamer: two
+  round: two
