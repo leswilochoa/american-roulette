@@ -16,8 +16,13 @@
 </p>
 
 <p>
+  <strong>Edad:</strong>
+  <%= Date.today.year - @gamer.born_date.year %>
+</p>
+
+<p>
   <strong>Dinero disponible:</strong>
-  <%= <%= number_to_currency(@gamer.wallet.money, precision: 2, strip_insignificant_zeros: true, separator:",", delimitier:".", ) %> %>
+  <%= number_to_currency(@gamer.wallet.money, precision: 2, strip_insignificant_zeros: true, separator:",", delimitier:".", ) %>
 </p>
 
 <%= link_to 'Edit', edit_gamer_path(@gamer) %> |
