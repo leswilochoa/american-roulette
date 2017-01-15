@@ -1,0 +1,41 @@
+<h1>Rondas de juego</h1>
+
+<a href="/rounds/create">Lanzar ronda</a>
+<br>
+<a href="<%= gamers_path%>">Jugadores</a>
+
+<h2>Lista de rondas</h2>
+
+<% if @rounds.any?%>
+	<% @rounds.each do |round| %>
+		<fieldset>
+		<legend>Ronda</legend>
+			<h3>Id: <%= round.id %></h3>
+			<h4>Resultado: <%= round.result.capitalize %></h4>
+			<p>Fecha: <%= round.created_at %></p>
+			<h4>Apuestas:</h4>
+			<table>
+				<tr>
+					<th>Nombre</th>
+					<th>Color apostado</th>
+					<th>Monto de apuesta</th>
+					<th>Ganado en la ronda</th>
+				</tr>
+				<%if round.bets.any? %>
+					<%round.bets.each do |bet| %>
+						<tr>
+							<td><%= bet.gamer.full_name %></td>
+							<td><%= bet.choice %></td>
+							<td><%= bet.amount %></td>
+							<td><%= bet.amount_won %></td>
+						</tr>
+					<%end%>
+				<%else%>
+					<tr><td colspan="4">Nadie apostó en esta ronda</td></tr>
+				<%end%>
+			</table>
+		</fieldset>
+	<%end%>
+<% else %>
+	Aún no hay jugadas
+<% end %>
