@@ -6,25 +6,32 @@ class RoundsController < ApplicationController
 	@@container_bets = []
 
 	def new
-
+		@rounds = Round.all
 	end
 
 	def create
 		gamer_bets
 		if @@container_bets.any?
-			round = Round.new
-			round.result = get_color
+			@round = Round.new
+			@round.result = get_color
+			@round.save
 			@@container_bets.each do |bet|
-				#bet.round_id = round.id
-				bet.amount_won = pay_win(bet, round.result)
-				abort bet.inspect
+				bet.round_id = @round.id
+				bet.amount_won = pay_win(bet, @round.result)
+				bet.save
+			end
+			respond_to do |format|
+				format.html { render :new, notice: 'Resultado de la ronda.' }
 			end
 		else
+			respond_to do |format|
+				format.html { render :new, notice: 'Ningún jugador aposto a esta ronda por falta de dinero.' }
+			end
 		end
 	end
 
-	def get_color #generate rand result for the game
-		result = rand(1..100).round(2)
+	def get_color #generate rand color for the game
+		result = rand(1..100).round(2).to_i
 		case result
 		when 1..2 #probability for green color 2%
 			"green"
@@ -53,7 +60,6 @@ class RoundsController < ApplicationController
 			end
 		end
 		bets_percentage(bet_discrete)
-		
 	end
 
 	#change percentage limits for bets if weather conditions are true
@@ -66,6 +72,7 @@ class RoundsController < ApplicationController
 	def gamer_bets
 		get_weather
 		@gamers = Gamer.gamer_with_money
+		@@container_bets = []
 		@gamers.each do |gamer|
 			bet = Bet.new
 			bet.gamer_id = gamer.id
@@ -85,14 +92,16 @@ class RoundsController < ApplicationController
 			case result
 			when "red", "black" 
 				bet.gamer.wallet.money += bet.amount*2
-				return bet.amount*2
+				won_amount = bet.amount*2
 			else
 				bet.gamer.wallet.money += bet.amount*15
-				return bet.amount*15
+				won_amount = bet.amount*15
 			end
 		else
 			bet.gamer.wallet.money -= bet.amount
-			return 0
+			won_amount = 0
 		end
+		bet.gamer.wallet.save
+		return won_amount
 	end
 end
