@@ -1,3 +1,4 @@
+#Version v1.0.0
 require_relative 'boot'
 
 require 'rails/all'
